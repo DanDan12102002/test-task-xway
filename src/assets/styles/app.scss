@@ -1,0 +1,133 @@
+@import './fonts.scss';
+
+$text-color: #242424;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+p {
+  margin-bottom: 0 !important;
+}
+
+body {
+  font-size: 16px;
+  line-height: 1.2;
+  color: $text-color;
+  font-family: 'Montserrat';
+}
+
+.f-l {
+  font-weight: 300;
+}
+
+.f-b {
+  font-weight: bold;
+}
+
+@keyframes preloader-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.preloader {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transition: 0.2s;
+
+  &.hide {
+    pointer-events: none;
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  &-container {
+    margin-top: 10px;
+  }
+
+  &-circle {
+    display: block;
+    width: 30px;
+    height: 30px;
+    border: 3px solid rgba(20, 167, 93, 0.2);
+    border-right-color: rgba(20, 167, 93, 1);
+    border-left-color: rgba(20, 167, 93, 1);
+    border-radius: 50%;
+    animation: preloader-rotate 0.6s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    font-size: 0;
+  }
+}
+
+.user-table {
+  width: 100%;
+  .table {
+    width: 100%;
+    td {
+      vertical-align: middle;
+    }
+    thead tr th{
+      transition: .3s;
+      cursor: pointer;
+      svg {
+        transition: .3s;
+        path {
+          transition: inherit;
+        }
+      }
+      &:hover {
+        color: #72D9BD;
+        svg path{
+          fill: #72D9BD;
+        }
+      }
+      &:not(:first-child) {
+        text-align: right;
+      }
+    }
+    tbody tr {
+      transition: .3s;
+      &:hover {
+        background: rgb(237, 254, 250);
+      }
+    }
+    .user {
+      display: flex;
+      align-items: center;
+      &-profile {
+        max-width: 75px;
+        border-radius: 50%;
+        overflow: hidden;
+        img {
+          max-width: 100%;
+        }
+      }
+      &-nickname p {
+        &:first-child {
+          margin-bottom: 10px;
+        }
+        a {
+          text-decoration: none;
+          transition: .3s;
+          color: rgb(37, 37, 37);
+          &:hover {
+            color: darken(rgb(37, 37, 37), 10%);
+          }
+        }
+      }
+    }
+  }
+}

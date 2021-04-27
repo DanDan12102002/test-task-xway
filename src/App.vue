@@ -1,28 +1,62 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="user-table">
+      <div class="container">
+        <div :class="`preloader ${_loaded ? 'hide' : ''}`" id="preloader">
+          <div class="preloader-container">
+            <div class="preloader-circle"></div>
+          </div>
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Информация</th>
+              <th @click="sortBy('followers')">
+                <span>Подписчиков</span>
+                <Arrow ref="followers" class="ml-2" />
+              </th>
+              <th @click="sortBy('er')">
+                <span>Рейтинг увлеченности</span>
+                <Arrow ref="er" class="ml-2" />
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <User
+              v-for="(influencer, i) in influencers"
+              :key="i"
+              :influencer="influencer"
+            />
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import FieldService from './FieldService';
+import Arrow from './components/Arrow'
+import User from './components/User'
+import {mapState} from 'vuex'
 
 export default {
   name: 'App',
+  async created() {
+    const fieldService = new FieldService();
+    const influencers = await fieldService.getInfluencers();
+
+    this.$store.commit('setInfluencers', influencers)
+  },
   components: {
-    HelloWorld
-  }
+    Arrow,
+    User
+  },
+  methods: {
+    sortBy(column) {
+      this.$refs[column].sortColumn(column)
+    }
+  },
+  computed: mapState(['influencers', '_loaded'])
 }
 </script>
-
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
